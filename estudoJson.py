@@ -1,5 +1,7 @@
 import json
 import urllib.request
+import datetime
+
 
 
 def carrega_json():
@@ -23,9 +25,31 @@ def carrega_json():
         companias.append(cp)
     return companias
 
-def busca_empresa(estado ,produto):
-    for comp in carrega_json():
-        if(produto in comp and estado in  comp):
-            print(comp)
+def busca_empresa(estado, produto):
+    tam = []
+    try:
+        for comp in carrega_json():
+            if(produto in comp and estado in comp):
+                tam.append(comp)
+                print(comp)
+        tamanho = len(tam)
+        compId = tam[0][0]
+        grava_busca(tam, tamanho, compId)
+    except IndexError:
+        print("erro na leitura da lista")
+
+def grava_busca(companias,tamanho,id):
+    data = datetime.datetime.now()
+    nome = str(data.date())+str(id)+str(tamanho)+".txt"
+    print(nome)
+    try:
+        arquivo = open('C:\\Temp\\'+nome, 'w')
+        for empresa in companias:
+            arquivo.writelines(empresa)
+
+    except FileNotFoundError:
+        arquivo = open(nome, 'w')
+        arquivo.writelines(u'Arquivo criado pois nao existia')
+    arquivo.close()
 #teste commite
-busca_empresa('ctba','mousse')
+busca_empresa('SP','mousse')
