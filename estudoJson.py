@@ -27,5 +27,5 @@ def busca_empresa(estado ,produto):
     for comp in carrega_json():
         if(produto in comp and estado in  comp):
             print(comp)
-
-busca_empresa('SP','mousse')
+#teste commite
+busca_empresa('ctba','mousse')
